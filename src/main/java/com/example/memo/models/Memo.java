@@ -2,8 +2,6 @@ package com.example.memo.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 @Entity
@@ -12,13 +10,13 @@ public class Memo implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     @Column(nullable = false , updatable = false)
-    private int id;
+    private Integer id;
     private String title;
     private String message;
     private String creator;
     private String[] tags;
     private String image;
-    private int likes = 0;
+    private int likes;
     private String createdAt;
 
     public Memo() {}
@@ -29,11 +27,6 @@ public class Memo implements Serializable {
         this.creator = creator;
         this.tags = tags;
         this.image = image;
-
-        // format Date
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
-        this.createdAt = dtf.format(now);
     }
 
     public int getId() {
@@ -90,6 +83,10 @@ public class Memo implements Serializable {
 
     public String getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

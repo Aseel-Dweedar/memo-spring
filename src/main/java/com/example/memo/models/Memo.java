@@ -1,6 +1,7 @@
 package com.example.memo.models;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -8,9 +9,9 @@ import java.util.Arrays;
 public class Memo implements Serializable {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false , updatable = false)
-    private Integer id;
+    private Long id;
     private String title;
     private String message;
     private String creator;
@@ -29,8 +30,12 @@ public class Memo implements Serializable {
         this.image = image;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {

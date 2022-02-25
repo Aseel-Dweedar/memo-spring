@@ -1,5 +1,6 @@
 package com.example.memo.services;
 
+import com.example.memo.exceptions.UserNotFoundException;
 import com.example.memo.models.Memo;
 import com.example.memo.repos.MemoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,20 +32,26 @@ public class MemoService {
         return memoRepository.findAll();
     }
 
-    public Memo findMemoById(Integer id) {
+    public Memo findMemoById(Long id) {
         return memoRepository.findMemoById(id).orElseThrow(()->new UserNotFoundException(id +" not found"));
     }
 
-    public Memo updateMemo(Memo memo) {
-        return memoRepository.save(memo);
+    public Memo updateMemo(Long id, Memo memo) {
+        Memo memoToEdit = this.findMemoById(id);
+        memoToEdit.setMessage(memo.getMessage());
+        memoToEdit.setImage(memo.getImage());
+        memoToEdit.setTitle(memo.getTitle());
+        memoToEdit.setTags(memo.getTags());
+        return memoRepository.save(memoToEdit);
     }
 
-    public Memo updateMemoLikes(Memo memo) {
-        memo.setLikes(memo.getLikes()+1);
-        return memoRepository.save(memo);
+    public Memo updateMemoLikes(Long id) {
+        Memo memoToEdit = this.findMemoById(id);
+        memoToEdit.setLikes(memoToEdit.getLikes()+1);
+        return memoRepository.save(memoToEdit);
     }
 
-    public void deleteMemoById(Integer id) {
+    public void deleteMemo(Long id) {
         memoRepository.deleteMemoById(id);
     }
 }

@@ -1,7 +1,6 @@
 package com.example.memo.models;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -16,6 +15,7 @@ public class Memo implements Serializable {
     private String message;
     private String creator;
     private String[] tags;
+    @Lob
     private String image;
     private int likes;
     private String createdAt;
